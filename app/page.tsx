@@ -2,7 +2,6 @@
 
 export default function Home() {
   const apiKey = process.env.NEXT_PUBLIC_API_KEY;
-  console.log(apiKey);
 
   const fetchGames = async () => {
     try {
@@ -11,6 +10,7 @@ export default function Home() {
       );
       const data = await response.json();
       console.log(data.results);
+      return data.results;
     } catch (error) {
       console.log(error);
     }
