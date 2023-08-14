@@ -4,29 +4,24 @@ import { useEffect, useState } from 'react';
 
 export default function Home() {
   const [games, setGames] = useState([]);
-  const apiKey = process.env.NEXT_PUBLIC_API_KEY;
 
   useEffect(() => {
-    const fetchGames = async () => {
+    (async () => {
       try {
-        const response = await fetch(
-          `https://api.rawg.io/api/games?key=${apiKey}`
-        );
+        const response = await fetch(`http://localhost:3000/api/get-games`);
         const data = await response.json();
-        console.log(data.results);
-        setGames(data.results);
+        setGames(data);
       } catch (error) {
         console.log(error);
       }
-    };
-
-    fetchGames();
+    })();
   }, []);
 
   const foundGames = games.map((game, i) => {
     return (
       <div key={i} className="text-center mb-10">
         <p>{game.name}</p>
+        <p>Released: {game.released}</p>
         <p>Metacritic score: {game.metacritic}</p>
         <div className="flex justify-center items-center">
           <img src={game.background_image} alt={game.name} className="w-64" />
