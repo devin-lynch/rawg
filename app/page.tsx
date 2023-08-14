@@ -4,18 +4,7 @@ import { useEffect, useState } from 'react';
 
 export default function Home() {
   const [games, setGames] = useState([]);
-
-  useEffect(() => {
-    (async () => {
-      try {
-        const response = await fetch(`http://localhost:3000/api/get-games`);
-        const data = await response.json();
-        setGames(data);
-      } catch (error) {
-        console.log(error);
-      }
-    })();
-  }, []);
+  const [gameTitle, setGameTitle] = useState('');
 
   const foundGames = games.map((game, i) => {
     return (
@@ -30,5 +19,40 @@ export default function Home() {
     );
   });
 
-  return <div>{foundGames}</div>;
+  const handleInputChange = (e) => {
+    setGameTitle(e.target.value);
+  };
+
+  const handleSubmit = async () => {
+    try {
+      console.log('hi');
+      const response = await fetch('http://localhost:3000/api/get-games', {
+        method: 'POST',
+        body: JSON.stringify({
+          title: gameTitle,
+        }),
+      });
+      const data = await response.json();
+      console.log(data);
+      setGames(data.results);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  return (
+    <div>
+      <div className="text-center mb-6 mt-4">
+        <input
+          className="search-text"
+          type="text"
+          placeholder="search titles..."
+          onChange={(e) => handleInputChange(e)}
+          value={gameTitle}
+        />
+        <button onClick={handleSubmit}>search</button>
+      </div>
+      <div>{foundGames}</div>
+    </div>
+  );
 }
