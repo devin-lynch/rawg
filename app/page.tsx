@@ -2,11 +2,13 @@
 
 import { useEffect, useState } from 'react';
 import Dropdown from './_components/Dropdown';
+import Game from './_components/Game';
+import Developer from './_components/Developer';
 
 export default function Home() {
   const [games, setGames] = useState([]);
-  const [genre, setGenre] = useState('');
   const [developers, setDevelopers] = useState([]);
+  const [genre, setGenre] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
   const [searchType, setSearchType] = useState('gameTitles');
   const [searchedType, setSearchedType] = useState('');
@@ -14,13 +16,8 @@ export default function Home() {
   const foundGames = games.map((game, i) => {
     if (game.background_image && game.metacritic) {
       return (
-        <div key={i} className="text-center mb-10">
-          <p>{game.name}</p>
-          <p>Released: {game.released}</p>
-          <p>Metacritic score: {game.metacritic}</p>
-          <div className="flex justify-center items-center">
-            <img src={game.background_image} alt={game.name} className="w-64" />
-          </div>
+        <div key={i}>
+          <Game game={game} />
         </div>
       );
     }
@@ -29,17 +26,8 @@ export default function Home() {
   const foundDevelopers = developers.map((developer, i) => {
     if (developers && developer.image_background) {
       return (
-        <div key={i} className="text-center mb-10">
-          <p>{developer.name}</p>
-          {developer.image_background ? (
-            <div className="flex justify-center items-center">
-              <img
-                src={developer.image_background}
-                alt={developer.name}
-                className="w-64"
-              />
-            </div>
-          ) : null}
+        <div key={i}>
+          <Developer name={developer.name} image={developer.image_background} />
         </div>
       );
     }
@@ -60,7 +48,7 @@ export default function Home() {
           }),
         });
         const data = await response.json();
-        console.log(data);
+        console.log('GAMES', data);
         setDevelopers([]);
         setGames(data.results);
       } else if (searchType === 'platforms') {
@@ -107,7 +95,7 @@ export default function Home() {
           onChange={(e) => handleInputChange(e)}
           value={searchTerm}
         />
-        <button onClick={handleSubmit}>search</button>
+        <button onClick={handleSubmit}>Search</button>
         <Dropdown
           searchType={searchType}
           handleSearchTypeChange={handleSearchTypeChange}
