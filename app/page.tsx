@@ -1,12 +1,24 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Dropdown from './_components/Dropdown';
 import Game from './_components/Game';
 import Developer from './_components/Developer';
 
+type Props = {
+  games: {
+    [key: number]: {
+      name: string;
+      metacritic: number;
+      background_image: string;
+      id: number;
+      released: string;
+    };
+  };
+};
+
 export default function Home() {
-  const [games, setGames] = useState([]);
+  const [games, setGames] = useState<Props[]>([]);
   const [developers, setDevelopers] = useState([]);
   const [genre, setGenre] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
@@ -48,7 +60,7 @@ export default function Home() {
           }),
         });
         const data = await response.json();
-        console.log('GAMES', data);
+        console.log('GAMES', data.results);
         setDevelopers([]);
         setGames(data.results);
       } else if (searchType === 'platforms') {
