@@ -1,9 +1,9 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function Page({ params }: { params: { id: number } }) {
-  console.log(params);
+  const [game, setGame] = useState();
 
   const fetchGame = async () => {
     try {
@@ -14,20 +14,26 @@ export default function Page({ params }: { params: { id: number } }) {
         }),
       });
       const data = await response.json();
-      console.log(data);
+
       return data;
     } catch (error) {
       console.log(error);
     }
   };
 
+  const buildGame = async () => {
+    let builtGame = await fetchGame();
+    setGame(builtGame);
+  };
+
   useEffect(() => {
-    fetchGame();
+    buildGame();
   }, []);
 
   return (
     <div>
       <p>{`${params.id}`}</p>
+      {game ? <p>{game.id}</p> : null}
     </div>
   );
 }
