@@ -33,7 +33,7 @@ export default function Page({ params }: { params: { id: number } }) {
 
   const displayGameInfo = game ? (
     <div className="text-center">
-      <div>
+      <div className="flex justify-center">
         <img src={game.background_image} alt={game.name} />
       </div>
       <p className="text-4xl">{game.name}</p>
@@ -44,7 +44,7 @@ export default function Page({ params }: { params: { id: number } }) {
         <a href={game.website}>Website</a>
       </p>
       <p className="text-xl">
-        <a href={game.reddit_url}>Subreddit</a>
+        <a href={game.reddit_url}>{game.reddit_name} &#40;subreddit&#41;</a>
       </p>
     </div>
   ) : null;

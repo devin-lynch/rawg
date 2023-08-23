@@ -89,7 +89,6 @@ export default function Home() {
           className="search-text"
           type="text"
           placeholder="search titles..."
-          // onChange={(e) => handleInputChange(e)}
           onChange={(e) => setSearchTerm(e.target.value)}
           value={searchTerm}
         />
