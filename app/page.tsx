@@ -29,7 +29,7 @@ export default function Home() {
     if (developers && developer.image_background) {
       return (
         <div key={i}>
-          <Developer name={developer.name} image={developer.image_background} />
+          <Developer developer={developer} />
         </div>
       );
     }
@@ -65,7 +65,7 @@ export default function Home() {
           }
         );
         const data = await response.json();
-        console.log(data);
+        console.log('DEVELOPERS', data.results);
         setGames([]);
         setDevelopers(data.results);
       }

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Games from '@/app/_interfaces/Games.interface';
+
 export default function Page({ params }: { params: { id: number } }) {
   const [game, setGame] = useState<Games>();
 
@@ -14,7 +15,6 @@ export default function Page({ params }: { params: { id: number } }) {
         }),
       });
       const data = await response.json();
-
       return data;
     } catch (error) {
       console.log(error);
