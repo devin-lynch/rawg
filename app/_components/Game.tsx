@@ -1,6 +1,14 @@
 'use client';
 
-export default function Game({ game }) {
+interface GameProp {
+  id: number;
+  name: string;
+  released: string;
+  metacritic: number;
+  background_image: string;
+}
+
+export default function Game({ game }: { game: GameProp }) {
   return (
     <div className="text-center mb-10">
       <a href={`/games/${game.id}`}>

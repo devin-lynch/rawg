@@ -4,22 +4,12 @@ import React, { useEffect, useState } from 'react';
 import Dropdown from './_components/Dropdown';
 import Game from './_components/Game';
 import Developer from './_components/Developer';
-
-type Props = {
-  games: {
-    [key: number]: {
-      name: string;
-      metacritic: number;
-      background_image: string;
-      id: number;
-      released: string;
-    };
-  };
-};
+import Games from '../app/_interfaces/Games.interface';
+import Developers from './_interfaces/Developers.interface';
 
 export default function Home() {
-  const [games, setGames] = useState<Props[]>([]);
-  const [developers, setDevelopers] = useState([]);
+  const [games, setGames] = useState<Games[]>([]);
+  const [developers, setDevelopers] = useState<Developers[]>([]);
   const [genre, setGenre] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
   const [searchType, setSearchType] = useState('gameTitles');
@@ -44,10 +34,6 @@ export default function Home() {
       );
     }
   });
-
-  const handleInputChange = (e) => {
-    setSearchTerm(e.target.value);
-  };
 
   const handleSubmit = async () => {
     try {
@@ -90,7 +76,6 @@ export default function Home() {
 
   const handleSearchTypeChange = (newType: string) => {
     setSearchType(newType);
-    // the searchType was always one step behind when console logging here, which is why it was moved to a useEffect
   };
 
   useEffect(() => {
@@ -104,7 +89,8 @@ export default function Home() {
           className="search-text"
           type="text"
           placeholder="search titles..."
-          onChange={(e) => handleInputChange(e)}
+          // onChange={(e) => handleInputChange(e)}
+          onChange={(e) => setSearchTerm(e.target.value)}
           value={searchTerm}
         />
         <button onClick={handleSubmit}>Search</button>
