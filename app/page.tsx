@@ -12,7 +12,7 @@ export default function Home() {
   const [developers, setDevelopers] = useState<Developers[]>([]);
   const [genre, setGenre] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
-  const [searchType, setSearchType] = useState('gameTitles');
+  const [searchType, setSearchType] = useState('titles');
   const [searchedType, setSearchedType] = useState('');
 
   const foundGames = games.map((game, i) => {
@@ -37,8 +37,8 @@ export default function Home() {
 
   const handleSubmit = async () => {
     try {
-      if (searchType === 'gameTitles') {
-        setSearchedType('gameTitles');
+      if (searchType === 'titles') {
+        setSearchedType('titles');
         const response = await fetch('http://localhost:3000/api/get-games', {
           method: 'POST',
           body: JSON.stringify({
@@ -88,7 +88,7 @@ export default function Home() {
         <input
           className="search-text"
           type="text"
-          placeholder="search titles..."
+          placeholder={`search ${searchType}...`}
           onChange={(e) => setSearchTerm(e.target.value)}
           value={searchTerm}
         />

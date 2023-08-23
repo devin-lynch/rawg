@@ -1,6 +1,12 @@
 'use client';
 
-export default function Developer({ name, image }) {
+export default function Developer({
+  name,
+  image,
+}: {
+  name: string;
+  image: string;
+}) {
   return (
     <div className="text-center mb-10">
       <p>{name}</p>
